@@ -2,9 +2,9 @@
   "name": "lighthouse-puppeteer",
   "version": "1.0.0",
   "description": "",
-  "main": "Lighthouse-Puppeteer.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node --trace-deprecation lighthouse-puppeteer--Prod.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,6 @@
     "chrome-launcher": "^0.14.1",
     "fs": "^0.0.1-security",
     "lighthouse": "^8.5.1",
-    "puppeteer": "^10.4.0",
-    "request": "^2.88.2",
-    "util": "^0.12.4"
+    "puppeteer": "^10.4.0"
   }
 }
