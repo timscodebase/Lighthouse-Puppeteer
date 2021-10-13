@@ -1,5 +1,5 @@
 # Lighthouse-Puppeteer
-## This is a tool we can use to test websites with Lighthouse and Puppeteer. We can build on this tool for monitoring *Performance* and *Accessibility*!
+## This is a tool we can use to test Checkout UI with Lighthouse and Puppeteer. We can build on this tool for monitoring *Performance* and *Accessibility*!
 
 ![ighthouse-Puppeteer](LHP.png)
 
