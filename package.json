@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index2.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,8 @@
     "chrome-launcher": "^0.14.1",
     "fs": "^0.0.1-security",
     "lighthouse": "^8.5.1",
-    "puppeteer": "^10.4.0"
+    "puppeteer": "^10.4.0",
+    "request": "^2.88.2",
+    "util": "^0.12.4"
   }
 }

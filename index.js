@@ -1,48 +1,73 @@
 const fs = require("fs");
+const puppeteer = require("puppeteer");
 const lighthouse = require("lighthouse");
-const chromeLauncher = require("chrome-launcher");
+const config = require("lighthouse/lighthouse-core/config/lr-desktop-config.js");
+const reportGenerator = require("./node_modules/lighthouse/report/generator/report-generator.js");
+
+const cookies = require("./cookies.js");
+
+const URL =
+  "https://local.secure-www.stage.gaptechol.com/checkout/place-order/";
+
+const launchOptions = {
+  chromeFlags: [
+    // "--headless",
+    // "--disable-mobile-emulation",
+    //"--no-sandbox",
+    "--allow-running-insecure-content",
+    "--ignore-certificate-errors",
+  ],
+  logLevel: "verbose",
+  output: "json",
+  disableDeviceEmulation: true,
+  defaultViewport: {
+    width: 1200,
+    height: 900,
+  },
+};
 
 (async () => {
-  const url =
-    "https://local.secure-www.stage.gaptechol.com/checkout/place-order/";
-  const chrome = await chromeLauncher.launch({
-    chromeFlags: [
-      // "--headless",
-      // "--disable-mobile-emulation",
-      //"--no-sandbox",
-      "--allow-running-insecure-content",
-      "--ignore-certificate-errors",
-    ],
-    logLevel: "verbose",
-    output: "json",
-    disableDeviceEmulation: true,
-    defaultViewport: {
-      width: 1200,
-      height: 900,
-    },
-  });
-  const options = {
-    logLevel: "verbose",
-    output: "html",
-    //onlyCategories: ["performance"],
-    port: chrome.port,
-  };
+  let browser = null;
+  let page = null;
 
-  const runnerResult = await lighthouse(url, options);
+  try {
+    browser = await navigateToCheckoutUI();
+    page = (await browser.pages())[0];
+    console.log(browser.wsEndpoint());
+    console.log("Running lighthouse...");
+    const report = await lighthouse(
+      page.url(),
+      {
+        port: new URL(browser.wsEndpoint()).port,
+        output: "json",
+        logLevel: "info",
+        disableDeviceEmulation: true,
+        chromeFlags: ["--disable-mobile-emulation"],
+      },
+      config
+    );
+    const json = reportGenerator.generateReport(report.lhr, "json");
+    const html = reportGenerator.generateReport(report.lhr, "html");
+    console.log(`Lighthouse scores: ${report.lhr.score}`);
 
-  // `.report` is the HTML report as a string
-  const reportHtml = runnerResult.report;
-  fs.writeFileSync(
-    `Checkout_UI_Lighthouse_Report_${Date.now()}.html`,
-    reportHtml
-  );
-
-  // `.lhr` is the Lighthouse Result as a JS object
-  console.log("Report is done for", runnerResult.lhr.finalUrl);
-  console.log(
-    "Performance score was",
-    runnerResult.lhr.categories.performance.score * 100
-  );
-
-  await chrome.kill();
+    console.log("Writing results...");
+    fs.writeFileSync("report.json", json);
+    fs.writeFileSync("report.html", html);
+    console.log("Done!");
+  } catch (error) {
+    console.error("Error!", error);
+  } finally {
+    //await page.close();
+    // await browser.close();
+  }
 })();
+
+async function navigateToCheckoutUI() {
+  const browser = await puppeteer.launch(launchOptions);
+
+  console.log("Navigating to Checkout UI...");
+  const page = (await browser.pages())[0];
+  await page.setCookie(...cookies);
+  await page.goto(URL, { waitUntil: "networkidle0" });
+  return browser;
+}
