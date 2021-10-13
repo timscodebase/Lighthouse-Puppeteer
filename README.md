@@ -33,5 +33,5 @@ You can export the cookies from the browser and use them in this app.
 ### Reports
 Reports are dumped in the root as 
 
-- `Checkout_UI_Lighthouse_Report_[date].json`
+- `Checkout_UI_Lighthouse_Report_[date].json` which could be feed into Splunk and New Relic.
 - `Checkout_UI_Lighthouse_Report_[date].html`
