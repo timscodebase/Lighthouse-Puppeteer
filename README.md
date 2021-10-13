@@ -1,5 +1,5 @@
 # Lighthouse-Puppeteer
-## This is a tool we can use to test websites with Lighthouse and Puppeteer. We build on this tool to *Performance* and *Accessibility*!
+## This is a tool we can use to test websites with Lighthouse and Puppeteer. We can build on this tool for monitoring *Performance* and *Accessibility*!
 
 ![ighthouse-Puppeteer](LHP.png)
 
@@ -16,7 +16,7 @@ nvm use v16.4.2
 npm i
 ```
 
-On either `Staging` or `prelive`, add an item to you cart and go to checkout as usual.  Then, instead of going to `local.` in your brower, go to it in this app.
+On either `Staging` or `prelive`, add an item to you cart and go to checkout as usual.  Then, instead of going to `local.` in your browser, go to it in this app.
 
 You can change the `URL` in `index.js` on line 9, and in `index2.js` on line 12.
 
@@ -31,7 +31,7 @@ You can export the cookies from the browser and use them in this app.
 3. Paste JSON cookie data into `cookies.json over writing anything from a previous run.
 
 ### Reports
-Report are dumped in the root as 
+Reports are dumped in the root as 
 
 - `Checkout_UI_Lighthouse_Report_[date].json`
 - `Checkout_UI_Lighthouse_Report_[date].html`
