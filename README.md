@@ -21,8 +21,11 @@ On either `Staging` or `prelive`, add an item to you cart and go to checkout as 
 You can change the `URL` in `index.js` on line 9, and in `index2.js` on line 12.
 
 ### Cookies
-**IT WILL NOT WORK** without cookies.
+
 ![Cookie Monster](cookie-monster.jpeg)
+
+
+**IT WILL NOT WORK** without cookies.
 
 You can export the cookies from the browser and use them in this app.
 
